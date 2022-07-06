@@ -18,3 +18,13 @@ jobs:
       run: docker build --file Dockerfile.dev --tag adiprad/docker-react .
     - name: Run the npm test
       run: docker run -e CI=true adiprad/docker-react npm run test
+    - name: Deploy project to AWS Elastic Beanstalk
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        region: us-east-1
+        application_name: docker-react
+        environment_name: Dockerreact-env
+        s3_bucket_name: elasticbeanstalk-us-east-1-200279149521
+        s3_file_path: docker-react
+        ebs_version_label: 1
